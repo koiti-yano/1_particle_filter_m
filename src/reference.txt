@@ -1,0 +1,15 @@
+[References]
+Kitagawa, Genshiro, (1996), "Monte Carlo Filter and Smoother for 
+Non-Gaussian Nonlinear State Space Models,"  Journal of Computational and 
+Graphical Statistics, Vol. 5, No. 1. (1996), pp. 1-25.
+
+Kitagawa, Genshiro, (1998), "Self-organizing State Space Model,"
+Journal of the American Statistical Association, Vol.93, No.443, 
+pp. 1203-1215.
+
+Kitagawa, Genshiro, (2010), Introduction to Time Series Modeling, 
+Chapman and Hall
+
+Yano, Koiti (2008), "A self-organizing state space model and 
+simplex initial distribution search," Computational Statistics, 
+Vol. 23, Issue 2, pp 197-216.

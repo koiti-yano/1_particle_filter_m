@@ -1,0 +1,22 @@
+* State and observation vectors as column vectors or row vectors
+
+Some matlab functions, for example , r = mvnrnd(MU,SIGMA,cases) returns
+row vectors, while most textbooks define state and observation vectors 
+as column vectors.
+
+mvnrndWrapper and mvnpdfWrapper returns column vectors.
+
+[Ref]
+r = mvnrnd(MU,SIGMA,cases), where MU is a n-by-d matrix, 
+SIGMA is a d-by-d symmetric positive semi-definite matrix, and 
+cases is a scalar, returns a cases-by-d matrix R of random vectors.
+
+muS = [0 ; 0]
+sysSigma = [1 0.5; 0.5 1.1]
+mvnrnd(muS, sysSigma )
+
+For example, elements of a system noise are 
+state(1, :) = [state11, state12]
+
+
+URL: http://jp.mathworks.com/help/stats/mvnrnd.html?lang=en
