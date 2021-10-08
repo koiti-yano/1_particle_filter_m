@@ -1,4 +1,4 @@
-% example1OneDimLinGaus.M
+% run01OneDimLinGaus.M
 % Copyright (c) 2013, Koiti Yano
 %
 % This script is distributed under the GNU Lesser General Public License.
