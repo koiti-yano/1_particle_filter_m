@@ -8,26 +8,29 @@
 %===========================================
 %% Initialization
 %===========================================
-%clear;
+clear;
 %close all;
 
 % Parameters
 modelFlag='standardSIR';
 
 timeLength = 100;
-numberOfState = 1;
-numberOfObs = 1;
-numberOfParticle = 10000;
-paramSys = 1;
-paramObs = 0.8;
-initialDistr = 1;
+numberOfState = 3;
+numberOfObs = 3;
+numberOfParticle = 1000;
+paramSys.mu = [0. 0.];
+paramSys.vcov = 0.1 * eye(3);
+
+paramObs.mu = [0. 0.];
+paramObs.vcov = 0.05 * eye(3);
+initialDistr = zeros(1, numberOfState);
 
 %===========================================
 %% Data Generation
 %===========================================
 
 % Create state vector
-stateGen = zeros(timeLength, numberOfObs);
+stateGen = zeros(timeLength, numberOfState);
 stateGen(1, :) = initialDistr;
 
 % Observation vector
@@ -35,7 +38,7 @@ observedValue = zeros(timeLength, numberOfObs);
 
 for ii = 1:(timeLength-1)
     
-    systemNoise = paramSys*randn(numberOfState);
+    systemNoise = mvnrnd(paramSys.mu, paramSys.vcov, 1);
     stateGen(ii+1, :) = systemEquation(stateGen(ii, :), systemNoise, ...
         numberOfState, numberOfParticle, modelFlag, paramSys, ii);
     

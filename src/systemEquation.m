@@ -60,6 +60,9 @@ switch modelFlag
             stCpy(ii, :) = [backlook.' nonbacklook.']; 
         end
         state = stCpy;
+
+    case 'standardSIR'
+        
         
 end
 %=========================================

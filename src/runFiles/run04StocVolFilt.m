@@ -30,7 +30,7 @@ initialDistr = 0.;
 %===========================================
 
 % Create state vector
-stateGen = zeros(timeLength, numberOfObs);
+stateGen = zeros(timeLength, numberOfState);
 stateGen(1, :) = initialDistr + 5*randn(1);
 
 % Observation vector

@@ -26,7 +26,7 @@ fixedLag = 40;
 %===========================================
 
 % Create state vector
-stateGen = zeros(timeLength, numberOfObs);
+stateGen = zeros(timeLength, numberOfState);
 stateGen(1, :) = initialDistr;
 
 % Observation vector
