@@ -14,18 +14,25 @@ numLoop = min(numberOfParticle, rr);
 switch modelFlag
     case 'oneDimLinearGaussian'
         state = state + systemNoise;
-        
+
     case 'oneDimNonLinear'
         state = (1/2)*state + (25 * state)./(state.^2 + 1) + ...
             8 * cos(1.2 * timeIndex) + systemNoise;
-    
+
     case 'stocVol'
         mu = paramSys.mu; phi = paramSys.phi;
         state = mu + phi * state + systemNoise;
-        
+
     case 'twoDimLinearGaussian'
         state = state + systemNoise;
-        
+
+    case 'standardSIR'
+        beta = paramSys.beta;
+        gamma = paramSys.gamma;
+        state(: , 1) = (1 - beta * state(: , 2)) .* state(: , 1);
+        state(: , 2) = (1 + beta * state(: , 1) - gamma) .* state(: , 2);
+        state(: , 3) = state(: , 3) + gamma * state(: , 2);
+
     case 'rbcSecondOrderItera'
         nx = paramSys.nx; ny = paramSys.ny;
         kx = paramSys.kx; pp = paramSys.pp; gg = paramSys.gg;
@@ -34,16 +41,16 @@ switch modelFlag
         stCpy = repmat(state,1);
         for ii = 1:numLoop
             backlook = kx + pp * state(ii, 1:nx).' + ...
-            (1/2) * kron(eye(nx), state(ii, 1:nx)) * gg * state(ii, 1:nx).' ...
-            + systemNoise(ii, 1:nx).' ;
-                
+                (1/2) * kron(eye(nx), state(ii, 1:nx)) * gg * state(ii, 1:nx).' ...
+                + systemNoise(ii, 1:nx).' ;
+
             nonbacklook = ky + ff * state(ii, 1:nx).' + ...
                 (1/2) * kron(eye(ny), backlook.') * ee * backlook ;
-            stCpy(ii, :) = [backlook.' nonbacklook.']; 
-%            state(ii, :) = [backlook.' nonbacklook.'];
+            stCpy(ii, :) = [backlook.' nonbacklook.'];
+            %            state(ii, :) = [backlook.' nonbacklook.'];
         end
         state = stCpy;
-        
+
     case 'rbcSecondOrderIteraParallel'
         nx = paramSys.nx; ny = paramSys.ny;
         kx = paramSys.kx; pp = paramSys.pp; gg = paramSys.gg;
@@ -52,18 +59,16 @@ switch modelFlag
         stCpy = repmat(state,1);
         parfor ii = 1:numLoop
             backlook = kx + pp * state(ii, 1:nx).' + ...
-            (1/2) * kron(eye(nx), state(ii, 1:nx)) * gg * state(ii, 1:nx).' ...
-            + systemNoise(ii, 1:nx).' ;
-        
+                (1/2) * kron(eye(nx), state(ii, 1:nx)) * gg * state(ii, 1:nx).' ...
+                + systemNoise(ii, 1:nx).' ;
+
             nonbacklook = ky + ff * state(ii, 1:nx).' + ...
                 (1/2) * kron(eye(ny), backlook.') * ee * backlook ;
-            stCpy(ii, :) = [backlook.' nonbacklook.']; 
+            stCpy(ii, :) = [backlook.' nonbacklook.'];
         end
         state = stCpy;
 
-    case 'standardSIR'
-        
-        
+
 end
 %=========================================
 

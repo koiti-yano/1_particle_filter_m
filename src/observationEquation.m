@@ -26,6 +26,9 @@ switch modelFlag
     case 'rbcSecondOrderIteraParallel'
         observedValue = state + observationNoise;
 
+    case 'standardSIR'
+        observedValue = state + observationNoise;
+
 end
 %=========================================
 

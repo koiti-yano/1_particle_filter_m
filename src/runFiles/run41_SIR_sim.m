@@ -9,7 +9,7 @@
 %% Initialization
 %===========================================
 clear;
-%close all;
+close all;
 
 % Parameters
 modelFlag='standardSIR';
@@ -18,12 +18,16 @@ timeLength = 100;
 numberOfState = 3;
 numberOfObs = 3;
 numberOfParticle = 1000;
-paramSys.mu = [0. 0.];
-paramSys.vcov = 0.1 * eye(3);
 
-paramObs.mu = [0. 0.];
+paramSys.mu = [0 0 0];
+paramSys.vcov = 0.1 * eye(3);
+paramSys.beta = 0.3;
+paramSys.gamma = 0.1;
+
+paramObs.mu = [0 0 0];
 paramObs.vcov = 0.05 * eye(3);
-initialDistr = zeros(1, numberOfState);
+initialDistr = [0.9999 0.0001 0];
+
 
 %===========================================
 %% Data Generation
@@ -42,12 +46,17 @@ for ii = 1:(timeLength-1)
     stateGen(ii+1, :) = systemEquation(stateGen(ii, :), systemNoise, ...
         numberOfState, numberOfParticle, modelFlag, paramSys, ii);
     
-    observationNoise = paramObs*randn(numberOfObs);
-    observedValue(ii+1, :) = observationEquation(stateGen(ii+1, :), ...
-        observationNoise, numberOfObs, modelFlag, paramObs, ii);
+%    observationNoise = paramObs*randn(numberOfObs);
+%    observedValue(ii+1, :) = observationEquation(stateGen(ii+1, :), ...
+%        observationNoise, numberOfObs, modelFlag, paramObs, ii);
     
 end
 
+plot(stateGen(:, 1))
+hold on
+plot(stateGen(:, 2))
+plot(stateGen(:, 3))
+hold off
 % plot generated data
 %{
 subplot(2,1,1) ; plot(stateGen) ; title('èÛë‘'); xlabel('éûä‘t')
@@ -57,7 +66,7 @@ subplot(2,1,2) ; plot(observedValue) ; title('äœë™íl'); xlabel('éûä‘t')
 %===========================================
 %% Estimation (Particle filter)
 %===========================================
-
+%{
 initialDistr = 0;
 
 % Estimation
@@ -86,3 +95,4 @@ hold off
 %hold off
 %print -deps one_dim_lin_gauss_filt_credible_intvl
 %=========================================
+%}
