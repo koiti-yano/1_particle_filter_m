@@ -29,9 +29,9 @@ switch modelFlag
     case 'standardSIR'
         beta = paramSys.beta;
         gamma = paramSys.gamma;
-        state(: , 1) = (1 - beta * state(: , 2)) .* state(: , 1);
-        state(: , 2) = (1 + beta * state(: , 1) - gamma) .* state(: , 2);
-        state(: , 3) = state(: , 3) + gamma * state(: , 2);
+        state(: , 1) = (1 - beta * state(: , 2)) .* state(: , 1) + systemNoise(:,1);
+        state(: , 2) = (1 + beta * state(: , 1) - gamma) .* state(: , 2) + systemNoise(:,2);
+        state(: , 3) = state(: , 3) + gamma * state(: , 2)  + systemNoise(:,2);
 
     case 'rbcSecondOrderItera'
         nx = paramSys.nx; ny = paramSys.ny;
