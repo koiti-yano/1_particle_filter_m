@@ -21,7 +21,7 @@ numberOfParticle = 1000;
 
 paramSys.mu = [0 0 0];
 paramSys.vcov = 0.0 * eye(3);
-paramSys.beta = 0.03;
+paramSys.beta = 0.3;
 paramSys.gamma = 0.1;
 
 paramObs.mu = [0 0 0];

@@ -1,8 +1,0 @@
-runFileの設定項目
-
-
-particleFilter関数
-
-particleFilter(observedValue, timeLength, numberOfState, numberOfObs, 
-               numberOfParticle, modelFlag, paramSys, paramObs, initialDistr)
-
