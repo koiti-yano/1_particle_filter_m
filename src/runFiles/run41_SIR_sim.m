@@ -53,10 +53,13 @@ for ii = 1:(timeLength-1)
     
 end
 
-plot(stateGen(:, 1))
+plot(stateGen(:, 1), 'LineWidth',1.5) ; 
+title("The standard SIR model (\beta=0.3, \gamma=0.1, \mu_t=1)");
+xlabel("Time")
 hold on
-plot(stateGen(:, 2))
-plot(stateGen(:, 3))
+plot(stateGen(:, 2), 'LineWidth',1.5)
+plot(stateGen(:, 3), 'LineWidth',1.5)
+legend('Susceptible fraction', 'Infectious fraction', 'Removed fraction')
 hold off
 % plot generated data
 %{
