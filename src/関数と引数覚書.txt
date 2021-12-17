@@ -6,6 +6,10 @@ function [stateEstimated, logLikeli, lowerBound, upperBound] = ...
     timeLength, numberOfState, numberOfObs, numberOfParticle, modelFlag, ...
     paramSys, paramObs, initialDistr)
 
+[初期分布]
+function initParticle = initialParticle(initialDistr, ...
+    numberOfParticle, modelFlag)
+
 
 [予測]
 predictionOfParticle関数：

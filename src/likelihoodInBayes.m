@@ -46,6 +46,12 @@ switch modelFlag
         residual = observedValue  - state;
         likelihood = mvnpdf(residual, paramObs.mu, paramObs.sysSigma);
 
+    case 'standardSIR'
+        % Statistics toolbox is required.
+        %residual = repmat(observedValue, [numberOfParticle, 1])  - state;
+        residual = observedValue  - state;
+        likelihood = mvnpdf(residual, paramObs.mean, paramObs.vcov);
+
 end
 
 

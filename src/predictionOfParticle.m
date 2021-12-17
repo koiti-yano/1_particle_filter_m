@@ -13,32 +13,37 @@ switch modelFlag
         systemNoise = paramSys*randn(numberOfParticle, 1);
         predictedState = systemEquation(state, systemNoise, ...
             numberOfState, numberOfParticle, modelFlag, paramSys, timeIndex);
-        
+
     case 'oneDimNonLinear'
         systemNoise = paramSys*randn(numberOfParticle, 1);
         predictedState = systemEquation(state, systemNoise, ...
             numberOfState, numberOfParticle, modelFlag, paramSys, timeIndex);
-        
+
     case 'stocVol'
         systemNoise = paramSys.sigma*randn(numberOfParticle, 1);
         predictedState = systemEquation(state, systemNoise, ...
             numberOfState, numberOfParticle, modelFlag, paramSys, timeIndex);
-        
+
     case 'twoDimLinearGaussian'
         systemNoise = mvnrnd(paramSys.mu, paramSys.sysSigma, ...
             numberOfParticle);
         predictedState = systemEquation(state, systemNoise, ...
             numberOfState, numberOfParticle, modelFlag, paramSys, timeIndex);
-        
+
     case 'rbcSecondOrderItera'
         systemNoise = mvnrnd(paramSys.mu, paramSys.sysSigma, ...
             numberOfParticle);
         predictedState = systemEquation(state, systemNoise, ...
             numberOfState, numberOfParticle, modelFlag, paramSys, timeIndex);
- 
-   case 'rbcSecondOrderIteraParallel'
+
+    case 'rbcSecondOrderIteraParallel'
         systemNoise = mvnrnd(paramSys.mu, paramSys.sysSigma, ...
             numberOfParticle);
+        predictedState = systemEquation(state, systemNoise, ...
+            numberOfState, numberOfParticle, modelFlag, paramSys, timeIndex);
+
+    case 'standardSIR'
+        systemNoise = mvnrnd(paramSys.mean, paramSys.vcov, 1);
         predictedState = systemEquation(state, systemNoise, ...
             numberOfState, numberOfParticle, modelFlag, paramSys, timeIndex);
 

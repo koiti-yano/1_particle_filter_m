@@ -8,7 +8,7 @@
 %===========================================
 %% Initialization
 %===========================================
-clear;
+clear all;
 close all;
 
 % Parameters
@@ -17,17 +17,18 @@ modelFlag='standardSIR';
 timeLength = 100;
 numberOfState = 3;
 numberOfObs = 3;
-numberOfParticle = 1000;
+numberOfParticle = 100000;
 
-paramSys.mu = [0 0 0];
-paramSys.vcov = 0.0 * eye(3);
+paramSys.mean = [0 0 0];
+paramSys.vcov = 0.000001 * eye(3);
 paramSys.beta = 0.3;
 paramSys.gamma = 0.1;
+paramSys.mu = 1;
 
-paramObs.mu = [0 0 0];
-paramObs.vcov = 0.05 * eye(3);
+paramObs.mean = [0 0 0];
+paramObs.vcov = 0.000001 * eye(3);
 % Initial Distribution: 
-initialDistr = [0.9999 0.0001 0];
+initialDistr = [0.999 0.001 0];
 
 
 %===========================================
@@ -40,38 +41,37 @@ stateGen(1, :) = initialDistr;
 
 % Observation vector
 observedValue = zeros(timeLength, numberOfObs);
+observedValue(1,1) = 1;
 
 for ii = 1:(timeLength-1)
     
-    systemNoise = mvnrnd(paramSys.mu, paramSys.vcov, 1);
+    systemNoise = mvnrnd(paramSys.mean, paramSys.vcov, 1);
     stateGen(ii+1, :) = systemEquation(stateGen(ii, :), systemNoise, ...
         numberOfState, numberOfParticle, modelFlag, paramSys, ii);
     
-%    observationNoise = paramObs*randn(numberOfObs);
-%    observedValue(ii+1, :) = observationEquation(stateGen(ii+1, :), ...
-%        observationNoise, numberOfObs, modelFlag, paramObs, ii);
+    observationNoise = mvnrnd(paramObs.mean, paramObs.vcov, 1);
+    observedValue(ii+1, :) = observationEquation(stateGen(ii+1, :), ...
+        observationNoise, numberOfObs, modelFlag, paramObs, ii);
     
 end
 
-plot(stateGen(:, 1), 'LineWidth',1.5) ; 
+
+% plot observed values
+plot(observedValue(:, 1), 'LineWidth',1.5) ; 
 title("The standard SIR model (\beta=0.3, \gamma=0.1, \mu_t=1)");
 xlabel("Time")
 hold on
-plot(stateGen(:, 2), 'LineWidth',1.5)
-plot(stateGen(:, 3), 'LineWidth',1.5)
+plot(observedValue(:, 2), 'LineWidth',1.5)
+plot(observedValue(:, 3), 'LineWidth',1.5)
 legend('Susceptible fraction', 'Infectious fraction', 'Removed fraction')
 hold off
-% plot generated data
-%{
-subplot(2,1,1) ; plot(stateGen) ; title('èÛë‘'); xlabel('éûä‘t')
-subplot(2,1,2) ; plot(observedValue) ; title('äœë™íl'); xlabel('éûä‘t')
-%}
+
 
 %===========================================
 %% Estimation (Particle filter)
 %===========================================
-%{
-initialDistr = 0;
+
+initialDistr = [0.999 0.001 0];
 
 % Estimation
 tic
@@ -83,8 +83,23 @@ toc
 
 logLikeli
 
-% Results
-figure; plot(stateGen(:,1), 'k-'); xlabel('Time');% title('ê^ÇÃèÛë‘Ç∆êÑíËílÇÃî‰är')
+%% Plots
+
+% Plot simulated data
+subplot(2,2,1);
+plot(stateGen(:, 1), 'LineWidth',1.5) ; 
+title("Simulation: the standard SIR model (\beta=0.3, \gamma=0.1, \mu_t=1)");
+xlabel("Time")
+hold on
+plot(stateGen(:, 2), 'LineWidth',1.5)
+plot(stateGen(:, 3), 'LineWidth',1.5)
+legend('Susceptible fraction', 'Infectious fraction', 'Removed fraction')
+hold off
+
+% Susceptible fraction
+subplot(2,2,2);
+plot(stateGen(:,1), 'k-'); xlabel('Time');
+title('Simultion and estimation: susceptible fraction ')
 hold on
 plot(stateEstimated(:, 1), 'k--o');
 legend('True state', 'Estimated state');
@@ -93,10 +108,24 @@ plot(upperBound(:, 1), 'k:');
 hold off
 %print -deps one_dim_lin_gauss_filt
 
-%figure; plot(stateEstimated(:, 1), 'k--o'); xlabel('Time');
-%hold on
-%legend('Estimated state', '95% credible interval');
-%hold off
-%print -deps one_dim_lin_gauss_filt_credible_intvl
-%=========================================
-%}
+% Infectious fraction
+subplot(2,2,3);
+plot(stateGen(:,2), 'k-'); xlabel('Time');
+title('Simultion and estimation: infectious fraction ')
+hold on
+plot(stateEstimated(:, 2), 'k--o');
+legend('True state', 'Estimated state');
+plot(lowerBound(:, 2), 'k:');
+plot(upperBound(:, 2), 'k:');
+hold off
+
+% Removed fraction
+subplot(2,2,4);
+plot(stateGen(:,3), 'k-'); xlabel('Time');
+title('Simultion and estimation: removed fraction ')
+hold on
+plot(stateEstimated(:, 3), 'k--o');
+legend('True state', 'Estimated state');
+plot(lowerBound(:, 3), 'k:');
+plot(upperBound(:, 3), 'k:');
+hold off
