@@ -1,8 +1,14 @@
+% run42_modified_SIR_est.m
+% Copyright (c) 2021, Koiti Yano
+%
+% This script is distributed under the GNU Lesser General Public License.
+% https://www.gnu.org/licenses/lgpl.html
+
 %% スプレッドシートからデータをインポート
 %    ワークブック: C:\Users\koiti\Dropbox\program\matlab\1_particle_filter_m\data\covid-19\cov_jp_all_owid_2021_12_17.xlsx
 %    ワークシート: Sheet1
 % MATLAB からの自動生成日: 2021/12/17 13:30:10
-%% インポート オプションの設定およびデータのインポート
+% インポート オプションの設定およびデータのインポート
 opts = spreadsheetImportOptions("NumVariables", 23);
 
 % シートと範囲の指定
@@ -27,5 +33,5 @@ clear opts
 % SIRモデルで使用するデータのみ抽出
 % https://jp.mathworks.com/help/matlab/matlab_prog/create-a-table.html
 sir_data = cov_jp_all_owid(:,{'date', 'susceptible_f', 'infectious_f',  'removed_f', 'aggregated_effectiveness'});
-
-%% 
+observed_value = table2array(cov_jp_all_owid(:,{'susceptible_f', 'infectious_f',  'removed_f'}));
+agg_eff = table2array(cov_jp_all_owid(:,{'aggregated_effectiveness'}));

@@ -52,6 +52,21 @@ switch modelFlag
         residual = observedValue  - state;
         likelihood = mvnpdf(residual, paramObs.mean, paramObs.vcov);
 
+        doflag = 1;
+        if doflag == 1
+            % If a state is outside [0, 1], a weight is set to zero for stable estimation. 
+            ff = state < 0 | state >1 ;
+            indx = (sum(ff, 2) ~= 0);
+            likelihood(indx, 1) = 0;
+        end
+        %{
+        % Example code
+        likelihood = [1; 2; 3; 4]
+        state = [-1 0.5, 1.1 ; 0.4 0.3 -0.2 ; 0.2 -0.45 0.77 ; 0.3 0.55 0.78]
+        ff = state < 0 | state >1 ; 
+        indx = (sum(ff, 2) ~= 0);
+        likelihood(indx, 1) = 0
+        %}
 end
 
 

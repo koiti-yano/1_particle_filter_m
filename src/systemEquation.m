@@ -73,7 +73,7 @@ switch modelFlag
         state(: , 3) = 1 - (state(:,1) + state(:,2));
 
         % [Ugly test code] Replace some values (> 1 and < 0);
-        % It does not work well.
+        % It does not work well. A similar code move to likelihoodInBayes.
         %{
             state = [-1 0.5, 1.1 ; 0.4 0.3 -0.2 ; 0.2 -0.45 0.77];
             stmp = state(:,1); stmp(stmp < 0 | stmp >1) = NaN;

@@ -17,11 +17,12 @@ modelFlag='standardSIR';
 timeLength = 100;
 numberOfState = 3;
 numberOfObs = 3;
-numberOfParticle = 100000;
+numberOfParticle = 10000; % 1万 
+%numberOfParticle = 1000000; % 100万
 
 paramSys.mean = [0 0 0];
 paramSys.vcov = 0.000001 * eye(3);
-paramSys.beta = 0.3;
+paramSys.beta = 0.508;
 paramSys.gamma = 0.1;
 paramSys.mu = 1;
 
@@ -58,7 +59,7 @@ end
 
 % plot observed values
 plot(observedValue(:, 1), 'LineWidth',1.5) ; 
-title("The standard SIR model (\beta=0.3, \gamma=0.1, \mu_t=1)");
+title("The standard SIR model (\beta=0.508, \gamma=0.1, \mu_t=1)");
 xlabel("Time")
 hold on
 plot(observedValue(:, 2), 'LineWidth',1.5)
@@ -70,8 +71,8 @@ hold off
 %===========================================
 %% Estimation (Particle filter)
 %===========================================
-
-initialDistr = [0.999 0.001 0];
+close;
+initialDistr = [1 0 0];
 
 % Estimation
 tic
@@ -83,12 +84,12 @@ toc
 
 logLikeli
 
-%% Plots
+% Plots
 
 % Plot simulated data
 subplot(2,2,1);
 plot(stateGen(:, 1), 'LineWidth',1.5) ; 
-title("Simulation: the standard SIR model (\beta=0.3, \gamma=0.1, \mu_t=1)");
+title("Simulation: the standard SIR model (\beta=0.508, \gamma=0.1, \mu_t=1)");
 xlabel("Time")
 hold on
 plot(stateGen(:, 2), 'LineWidth',1.5)
