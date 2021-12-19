@@ -22,9 +22,13 @@ numberOfParticle = 10000; % 1万
 
 paramSys.mean = [0 0 0];
 paramSys.vcov = 0.000001 * eye(3);
-paramSys.beta = 0.508;
+paramSys.betaAncestral = 0.279;
+paramSys.betaDelta = 0.508;
 paramSys.gamma = 0.1;
 paramSys.mu = 1;
+
+% A paarmeter shitf
+paramSys.paramShift = 50;
 
 paramObs.mean = [0 0 0];
 paramObs.vcov = 0.000001 * eye(3);
@@ -89,7 +93,8 @@ logLikeli
 % Plot simulated data
 subplot(2,2,1);
 plot(stateGen(:, 1), 'LineWidth',1.5) ; 
-title("Simulation: the standard SIR model (\beta=0.508, \gamma=0.1, \mu_t=1)");
+title("Simulation: the standard SIR model (\gamma=0.1, \mu_t=1)");
+%title("Simulation: the standard SIR model (\beta=0.508, \gamma=0.1, \mu_t=1)");
 xlabel("Time")
 hold on
 plot(stateGen(:, 2), 'LineWidth',1.5)

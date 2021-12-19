@@ -64,7 +64,13 @@ switch modelFlag
 
     case 'standardSIR'
         % Note: state(:,1) is s(t), state(:,2) is i(t), state(:,3) is r(t)
-        beta = paramSys.beta;
+        paramShift = paramSys.paramShift; % A parameter shift
+        if timeIndex <= paramShift
+            beta = paramSys.betaAncestral;
+        elseif timeIndex > paramShift
+            beta = paramSys.betaDelta;
+        end
+        
         gamma = paramSys.gamma;
         mu = paramSys.mu;
         state(: , 1) = state(: , 1) - beta * mu * state(: , 1) .* state(: , 2) + systemNoise(:,1);
