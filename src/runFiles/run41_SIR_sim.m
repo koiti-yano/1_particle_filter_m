@@ -105,7 +105,7 @@ hold off
 % Susceptible fraction
 subplot(2,2,2);
 plot(stateGen(:,1), 'k-'); xlabel('Time');
-title('Simultion and estimation: susceptible fraction ')
+title('Real data and estimation: susceptible fraction ')
 hold on
 plot(stateEstimated(:, 1), 'k--o');
 legend('True state', 'Estimated state');
