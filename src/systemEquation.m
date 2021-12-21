@@ -104,9 +104,10 @@ switch modelFlag
         gamma = paramSys.gamma;
         mu = paramSys.mu;
         state(: , 1) = state(: , 1) - beta * mu * state(: , 1) .* state(: , 2) + systemNoise(:,1);
-        state(: , 2) = (1 - gamma) .* state(: , 2) + beta * mu * state(: , 1) .* state(: , 2) + systemNoise(:,2);
+        state(:, 2) = (1 - gamma) .* state(: , 2) + beta * mu * state(: , 1) .* state(: , 2) + systemNoise(:,2);
         % state(: , 3) = state(: , 3) + gamma * state(: , 2)  + systemNoise(:,3);
         state(: , 3) = 1 - (state(:,1) + state(:,2));
+        state(: , 4) = state(:, 4) + systemNoise(:,3);
 
 end
 %=========================================

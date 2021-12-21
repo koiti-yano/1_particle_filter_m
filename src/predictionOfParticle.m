@@ -47,6 +47,11 @@ switch modelFlag
         predictedState = systemEquation(state, systemNoise, ...
             numberOfState, numberOfParticle, modelFlag, paramSys, timeIndex);
 
+    case 'modifiedSIRtvp'
+        systemNoise = mvnrnd(paramSys.mean, paramSys.vcov, numberOfParticle);
+        predictedState = systemEquation(state, systemNoise, ...
+            numberOfState, numberOfParticle, modelFlag, paramSys, timeIndex);
+
 end
 %=========================================
 

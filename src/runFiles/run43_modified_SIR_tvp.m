@@ -43,13 +43,13 @@ modelFlag='modifiedSIRtvp';
 
 %timeLength = 100;
 [timeLength, ~] = size(observedValue);
-numberOfState = 3;
+numberOfState = 4;
 numberOfObs = 3;
 numberOfParticle = 10000; % 1万 
 %numberOfParticle = 1000000; % 100万
 
-paramSys.mean = [0 0 0];
-paramSys.vcov = 0.000001 * eye(3);
+paramSys.mean = [0 0 0 0];
+paramSys.vcov = 0.000001 * eye(4);
 paramSys.betaAncestral = 0.279;
 paramSys.betaDelta = 0.508;
 paramSys.gamma = 0.1;
@@ -66,7 +66,7 @@ paramObs.vcov = 0.0000001 * eye(3);
 %% Estimation (Particle filter)
 %===========================================
 close;
-initialDistr = [1 0 0];
+initialDistr = [1 0 0 0.3];
 
 % Estimation
 tic
@@ -110,4 +110,5 @@ plot(lowerBound(:, 3), 'k:');
 plot(upperBound(:, 3), 'k:');
 hold off
 
-
+figure;
+plot(stateEstimated(:,4))

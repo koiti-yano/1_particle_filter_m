@@ -54,7 +54,7 @@ switch modelFlag
 
         doflag = 1;
         if doflag == 1
-            % If a state is outside [0, 1], a weight is set to zero for stable estimation. 
+            % If a state is outside [0, 1], a weight is set to zero for stable estimation.
             ff = state < 0 | state >1 ;
             indx = (sum(ff, 2) ~= 0);
             likelihood(indx, 1) = 0;
@@ -67,6 +67,21 @@ switch modelFlag
         indx = (sum(ff, 2) ~= 0);
         likelihood(indx, 1) = 0
         %}
+
+    case 'modifiedSIRtvp'
+        % Statistics toolbox is required.
+        %residual = repmat(observedValue, [numberOfParticle, 1])  - state;
+        residual = observedValue  - state(:,1:3);
+        likelihood = mvnpdf(residual, paramObs.mean, paramObs.vcov);
+
+        doflag = 1;
+        if doflag == 1
+            % If a state is outside [0, 1], a weight is set to zero for stable estimation.
+            ff = state < 0 | state >1 ;
+            indx = (sum(ff, 2) ~= 0);
+            likelihood(indx, 1) = 0;
+        end
+
 end
 
 
