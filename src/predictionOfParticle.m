@@ -43,7 +43,7 @@ switch modelFlag
             numberOfState, numberOfParticle, modelFlag, paramSys, timeIndex);
 
     case 'standardSIR'
-        systemNoise = mvnrnd(paramSys.mean, paramSys.vcov, 1);
+        systemNoise = mvnrnd(paramSys.mean, paramSys.vcov, numberOfParticle);
         predictedState = systemEquation(state, systemNoise, ...
             numberOfState, numberOfParticle, modelFlag, paramSys, timeIndex);
 

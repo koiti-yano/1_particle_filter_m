@@ -54,6 +54,7 @@ paramSys.betaAncestral = 0.279;
 paramSys.betaDelta = 0.508;
 paramSys.gamma = 0.1;
 paramSys.mu = 0.3;
+paramSys.aggEff = aggEff; % An aggregate effectiveness of vaccination
 
 % A paarmeter shitf 
 % In Japan, a dominant variant changed from Alpha to Delta in July 2021.

@@ -34,6 +34,10 @@ switch modelFlag
         % COVID-19の初期はs(t)=1, i(t)=0, r(t)=0が確実
         initParticle =  repmat(initialDistr, numberOfParticle,1);
 
+    case 'modifiedSIRtvp'
+        % COVID-19の初期はs(t)=1, i(t)=0, r(t)=0が確実
+        initParticle =  repmat(initialDistr, numberOfParticle,1);
+
 end
 %=========================================
 

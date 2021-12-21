@@ -26,7 +26,6 @@ switch modelFlag
     case 'twoDimLinearGaussian'
         state = state + systemNoise;
 
-
     case 'rbcSecondOrderItera'
         nx = paramSys.nx; ny = paramSys.ny;
         kx = paramSys.kx; pp = paramSys.pp; gg = paramSys.gg;
@@ -70,11 +69,13 @@ switch modelFlag
         elseif timeIndex > paramShift
             beta = paramSys.betaDelta;
         end
-        
+
+        aggEff = paramSys.aggEff; 
+        agg1 = 1 - aggEff(timeIndex);
         gamma = paramSys.gamma;
         mu = paramSys.mu;
-        state(: , 1) = state(: , 1) - beta * mu * state(: , 1) .* state(: , 2) + systemNoise(:,1);
-        state(: , 2) = (1 - gamma) .* state(: , 2) + beta * mu * state(: , 1) .* state(: , 2) + systemNoise(:,2);
+        state(: , 1) = state(: , 1) - beta * mu * agg1 * state(: , 1) .* state(: , 2) + systemNoise(:,1);
+        state(: , 2) = (1 - gamma) .* state(: , 2) + beta * mu * agg1 * state(: , 1) .* state(: , 2) + systemNoise(:,2);
         % state(: , 3) = state(: , 3) + gamma * state(: , 2)  + systemNoise(:,3);
         state(: , 3) = 1 - (state(:,1) + state(:,2));
 
@@ -90,6 +91,22 @@ switch modelFlag
             mm = mean(stmp, 'omitnan'); stmp(isnan(stmp)) = mm; state(:,3) = stmp;
             disp(state);[-1 0.5, 1.1 ; 0.4 0.3 -0.2 ; 0.2 -0.45 0.77]
         %}
+
+    case 'modifiedSIRtvp'
+        % Note: state(:,1) is s(t), state(:,2) is i(t), state(:,3) is r(t)
+        paramShift = paramSys.paramShift; % A parameter shift
+        if timeIndex <= paramShift
+            beta = paramSys.betaAncestral;
+        elseif timeIndex > paramShift
+            beta = paramSys.betaDelta;
+        end
+
+        gamma = paramSys.gamma;
+        mu = paramSys.mu;
+        state(: , 1) = state(: , 1) - beta * mu * state(: , 1) .* state(: , 2) + systemNoise(:,1);
+        state(: , 2) = (1 - gamma) .* state(: , 2) + beta * mu * state(: , 1) .* state(: , 2) + systemNoise(:,2);
+        % state(: , 3) = state(: , 3) + gamma * state(: , 2)  + systemNoise(:,3);
+        state(: , 3) = 1 - (state(:,1) + state(:,2));
 
 end
 %=========================================

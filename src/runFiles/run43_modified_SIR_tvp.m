@@ -39,7 +39,7 @@ aggEff = table2array(cov_jp_all_owid(:,{'aggregated_effectiveness'}));
 %sirData = cov_jp_all_owid(:,{'date', 'susceptible_f', 'infectious_f',  'removed_f', 'aggregated_effectiveness'});
 
 % Parameters
-modelFlag='standardSIR';
+modelFlag='modifiedSIRtvp';
 
 %timeLength = 100;
 [timeLength, ~] = size(observedValue);

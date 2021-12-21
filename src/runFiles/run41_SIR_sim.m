@@ -17,8 +17,7 @@ modelFlag='standardSIR';
 timeLength = 100;
 numberOfState = 3;
 numberOfObs = 3;
-numberOfParticle = 10000; % 1万 
-%numberOfParticle = 1000000; % 100万
+numberOfParticle = 1; % シミュレーションの場合
 
 paramSys.mean = [0 0 0];
 paramSys.vcov = 0.000001 * eye(3);
@@ -26,6 +25,7 @@ paramSys.betaAncestral = 0.279;
 paramSys.betaDelta = 0.508;
 paramSys.gamma = 0.1;
 paramSys.mu = 1;
+paramSys.aggEff = zeros(timeLength,1); % An aggregate effectiveness of vaccination = 0
 
 % A paarmeter shitf
 paramSys.paramShift = 50;
@@ -76,6 +76,9 @@ hold off
 %% Estimation (Particle filter)
 %===========================================
 close;
+numberOfParticle = 10000; % 1万 
+%numberOfParticle = 1000000; % 100万
+
 initialDistr = [1 0 0];
 
 % Estimation
