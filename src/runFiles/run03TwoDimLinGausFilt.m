@@ -16,7 +16,7 @@ timeLength = 100;
 
 numberOfState = 2;
 numberOfObs = 2;
-numberOfParticle = 100000;
+numberOfParticle = 10000;
 
 paramSys.mu = [0. 0.];
 paramSys.sysSigma = [1 0.5; 0.5 1.];
@@ -57,10 +57,10 @@ figure; subplot(2,1,1); plot(observedValue(:,1)); title('観測値1'); xlabel('時間
 subplot(2,1,2); plot(observedValue(:,2)); title('観測値2'); xlabel('時間t')
 
 %===========================================
-%% Estimation
+%% State estimation
 %===========================================
 
-% Estimation
+% State estimation
 tic
 [stateEstimated, logLikeli, lowerBound, upperBound] = ...
     particleFilter(observedValue, ...
@@ -80,6 +80,37 @@ subplot(2,1,2)
 plot(stateGen(:,2)); title('真の状態2と推定値の比較'); xlabel('時間t')
 hold on
 plot(stateEstimated(:, 2), 'r-o')
+legend('真の状態2', '推定された状態2')
+hold off
+
+logLikeli
+%=========================================
+
+%===========================================
+%% State estimation with parameter misclibrated
+%===========================================
+paramObs.sysSigma = [3 0; 0 3];
+
+% State estimation
+tic
+[stateEstimatedMis, logLikeliMis, lowerBoundMis, upperBoundMis] = ...
+    particleFilter(observedValue, ...
+    timeLength, numberOfState, numberOfObs, numberOfParticle, ...
+    modelFlag, paramSys, paramObs, initialDistr);
+toc
+
+% Results
+figure; subplot(2,1,1)
+plot(stateGen(:,1)); title('真の状態1と推定値の比較'); xlabel('時間t')
+hold on
+plot(stateEstimatedMis(:, 1), 'r-o')
+legend('真の状態1', '推定された状態1')
+hold off
+
+subplot(2,1,2)
+plot(stateGen(:,2)); title('真の状態2と推定値の比較'); xlabel('時間t')
+hold on
+plot(stateEstimatedMis(:, 2), 'r-o')
 legend('真の状態2', '推定された状態2')
 hold off
 

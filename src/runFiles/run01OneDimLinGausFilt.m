@@ -52,12 +52,12 @@ subplot(2,1,2) ; plot(observedValue) ; title('観測値'); xlabel('時間t')
 %}
 
 %===========================================
-%% Estimation (Particle filter)
+%% State estimation (Particle filter)
 %===========================================
 
 initialDistr = 0;
 
-% Estimation
+% State estimation
 tic
 [stateEstimated, logLikeli, lowerBound, upperBound] = ...
     particleFilter(observedValue, ...
@@ -65,7 +65,7 @@ tic
     modelFlag, paramSys, paramObs, initialDistr);
 toc
 
-logLikeli
+disp("Log-likelihood: " + logLikeli);
 
 % Results
 figure; plot(stateGen(:,1), 'k-'); xlabel('Time');% title('真の状態と推定値の比較')
@@ -83,3 +83,40 @@ hold off
 %hold off
 %print -deps one_dim_lin_gauss_filt_credible_intvl
 %=========================================
+
+%===========================================
+%% State estimation (Particle filter), parameter miscalibrated 
+%===========================================
+
+initialDistr = 0;
+paramObs = 0.8; % paramObs = 0.8 is correct.
+
+% State estimation
+tic
+[stateEstimatedMis, logLikeliMis, lowerBoundMis, upperBoundMis] = ...
+    particleFilter(observedValue, ...
+    timeLength, numberOfState, numberOfObs, numberOfParticle, ...
+    modelFlag, paramSys, paramObs, initialDistr);
+toc
+
+disp("Log-likelihood: " + logLikeliMis);
+
+% Results
+figure; plot(stateGen(:,1), 'k-'); xlabel('Time');% title('真の状態と推定値の比較')
+hold on
+plot(stateEstimatedMis(:, 1), 'k--o');
+legend('True state', 'Estimated state (miscalibrated parameter)');
+plot(lowerBoundMis(:, 1), 'k:');
+plot(upperBoundMis(:, 1), 'k:');
+hold off
+%print -deps one_dim_lin_gauss_filt
+
+%figure; plot(stateEstimated(:, 1), 'k--o'); xlabel('Time');
+%hold on
+%legend('Estimated state', '95% credible interval');
+%hold off
+%print -deps one_dim_lin_gauss_filt_credible_intvl
+%=========================================
+
+
+

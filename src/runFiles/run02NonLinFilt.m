@@ -50,10 +50,10 @@ subplot(2,1,2) ; plot(observedValue) ; title('観測値'); xlabel('時間t')
 %}
 
 %===========================================
-%% Estimation
+%% State estimation
 %===========================================
 
-% Estimation
+% State estimation
 tic
 [stateEstimated, logLikeli, lowerBound, upperBound] = ...
     particleFilter(observedValue, ...
@@ -61,7 +61,7 @@ tic
     modelFlag, paramSys, paramObs, initialDistr);
 toc
 
-logLikeli
+disp("Log-likelihood: " + logLikeli);
 
 % Results
 figure; plot(stateGen(:,1), 'k-'); xlabel('Time');% title('真の状態と推定値の比較')
@@ -76,3 +76,31 @@ hold off
 
 %=========================================
 
+%===========================================
+%% State estimation with parameter miscalibrated
+%===========================================
+
+paramObs = 5; % paramObs = 3 is correct.
+
+% State estimation
+tic
+[stateEstimatedMis, logLikeliMis, lowerBoundMis, upperBoundMis] = ...
+    particleFilter(observedValue, ...
+    timeLength, numberOfState, numberOfObs, numberOfParticle, ...
+    modelFlag, paramSys, paramObs, initialDistr);
+toc
+
+disp("Log-likelihood: " + logLikeli);
+
+% Results
+figure; plot(stateGen(:,1), 'k-'); xlabel('Time');% title('真の状態と推定値の比較')
+hold on
+plot(stateEstimatedMis(:, 1), 'k--o')
+plot(lowerBoundMis(:, 1), 'k:');
+plot(upperBoundMis(:, 1), 'k:');
+
+legend('True state', 'Estimated state')
+hold off
+%print -deps NonLinFilt
+
+%=========================================

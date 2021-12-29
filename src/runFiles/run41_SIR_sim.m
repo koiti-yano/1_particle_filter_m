@@ -89,7 +89,7 @@ tic
     modelFlag, paramSys, paramObs, initialDistr);
 toc
 
-logLikeli
+disp("Log-likelihood: " + logLikeli);
 
 % Plots
 

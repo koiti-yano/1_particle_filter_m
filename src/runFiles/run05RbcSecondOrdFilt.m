@@ -78,10 +78,10 @@ subplot(3,1,3); plot(observedValue(:,3)); title('ŠÏ‘ª’l3'); xlabel('ŽžŠÔt')
 %}
 
 %===========================================
-%% Estimation
+%% State estimation
 %===========================================
 
-% Estimation
+% State estimation
 tic
 [stateEstimated, logLikeli, lowerBound, upperBound] = ...
     particleFilter(observedValue, ...

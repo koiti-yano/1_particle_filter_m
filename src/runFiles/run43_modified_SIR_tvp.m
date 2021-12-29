@@ -76,7 +76,7 @@ tic
     modelFlag, paramSys, paramObs, initialDistr);
 toc
 
-logLikeli
+disp("Log-likelihood: " + logLikeli);
 
 %% Plots
 subplot(1,3,1);
