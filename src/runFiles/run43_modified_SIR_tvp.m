@@ -63,12 +63,12 @@ paramObs.mean = [0 0 0];
 paramObs.vcov = 0.0000001 * eye(3);
 
 %===========================================
-%% Estimation (Particle filter)
+%% State estimation (Particle filter)
 %===========================================
 close;
 initialDistr = [1 0 0 0.3];
 
-% Estimation
+% State estimation
 tic
 [stateEstimated, logLikeli, lowerBound, upperBound] = ...
     particleFilter(observedValue, ...

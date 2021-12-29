@@ -73,7 +73,7 @@ hold off
 
 
 %===========================================
-%% Estimation (Particle filter)
+%% State estimation (Particle filter)
 %===========================================
 close;
 numberOfParticle = 10000; % 1万 
@@ -81,7 +81,7 @@ numberOfParticle = 10000; % 1万
 
 initialDistr = [1 0 0];
 
-% Estimation
+% State estimation
 tic
 [stateEstimated, logLikeli, lowerBound, upperBound] = ...
     particleFilter(observedValue, ...

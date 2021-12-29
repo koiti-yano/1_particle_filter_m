@@ -66,13 +66,13 @@ subplot(2,1,2) ; plot(observedValue) ; title('Observation'); xlabel('Time t')
 end
 
 %===========================================
-%% Estimation (Kalman filter)
+%% State estimation (Kalman filter)
 %===========================================
 
 stateInit = 0;
 covInit = 100;
 
-% Estimation
+% State estimation
 tic
 [ stateEst, covMatEst, logLikeli, statePred,  covMatPred ] =  ...
     kalmanFilterInvariant( observedValue, FF, HH, sigmaQ, sigmaR, ...
