@@ -5,7 +5,7 @@
 % Lennart Svensson, (2012), "Comments on the resampling step in particle filtering"
 %
 % Modified by Koiti Yano
-function [ index ] = resamplingSystematic(index, weight)
+function [ index ] = resamplingSystematic(~, weight)
 
 Ns = length(weight); % Number of particle
 edges = min([0 cumsum(weight)'],1); % protect against accumulated round-off

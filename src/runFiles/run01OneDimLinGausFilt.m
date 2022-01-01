@@ -70,10 +70,10 @@ disp("Log-likelihood: " + logLikeli);
 % Results
 figure; plot(stateGen(:,1), 'k-'); xlabel('Time');% title('真の状態と推定値の比較')
 hold on
-plot(stateEstimated(:, 1), 'k--o');
-legend('True state', 'Estimated state');
+plot(stateEstimated(:, 1),  'k--o');
 plot(lowerBound(:, 1), 'k:');
 plot(upperBound(:, 1), 'k:');
+legend('True state', 'Estimated state (miscalibrated parameter)', 'Lower bound', 'Upper bound');
 hold off
 %print -deps one_dim_lin_gauss_filt
 
@@ -105,9 +105,9 @@ disp("Log-likelihood: " + logLikeliMis);
 figure; plot(stateGen(:,1), 'k-'); xlabel('Time');% title('真の状態と推定値の比較')
 hold on
 plot(stateEstimatedMis(:, 1), 'k--o');
-legend('True state', 'Estimated state (miscalibrated parameter)');
 plot(lowerBoundMis(:, 1), 'k:');
 plot(upperBoundMis(:, 1), 'k:');
+legend('True state', 'Estimated state (miscalibrated parameter)', 'Lower bound', 'Upper bound');
 hold off
 %print -deps one_dim_lin_gauss_filt
 

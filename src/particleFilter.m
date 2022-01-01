@@ -52,7 +52,7 @@ for ii = 1:(timeLength)
     for jj = 1:numberOfState
         stateEstimated(ii, jj) = mean(state(:, jj));
         % stateEstimated(ii, jj) = median(state(:, jj));
-        lowerBound(ii, jj) = quantile(state(:, jj), 0.25);
+        lowerBound(ii, jj) = quantile(state(:, jj), 0.025);
         upperBound(ii, jj) = quantile(state(:, jj), 0.975);
     end
     

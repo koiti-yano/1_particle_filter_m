@@ -5,7 +5,7 @@
 % Lennart Svensson, (2012), "Comments on the resampling step in particle filtering"
 %
 % Modified by Koiti Yano
-function index = resampleByHistc(index, weight)
+function index = resamplingByHistc(~, weight)
 
 N = length(weight);  % N = number of particles
 edges = min([0 cumsum(weight)'],1); % protect against accumulated round-off

@@ -68,6 +68,8 @@ tic
     modelFlag, paramSys, paramObs, initialDistr);
 toc
 
+disp("Log-likelihood: " + logLikeli);
+
 % Results
 figure; subplot(2,1,1)
 plot(stateGen(:,1)); title('真の状態1と推定値の比較'); xlabel('時間t')
@@ -83,7 +85,6 @@ plot(stateEstimated(:, 2), 'r-o')
 legend('真の状態2', '推定された状態2')
 hold off
 
-logLikeli
 %=========================================
 
 %===========================================
@@ -98,6 +99,9 @@ tic
     timeLength, numberOfState, numberOfObs, numberOfParticle, ...
     modelFlag, paramSys, paramObs, initialDistr);
 toc
+
+disp("Log-likelihood: " + logLikeliMis);
+
 
 % Results
 figure; subplot(2,1,1)
@@ -114,5 +118,4 @@ plot(stateEstimatedMis(:, 2), 'r-o')
 legend('真の状態2', '推定された状態2')
 hold off
 
-logLikeli
 %=========================================

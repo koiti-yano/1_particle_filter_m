@@ -9,9 +9,8 @@ function [resampledState, resampledIndex] = resamplingOfParticle(state, ...
 
 tmpIndex = 1:numberOfParticle;
 
-%resamplingFuncFlag = 'resamplingSystematic'; % Relatively fast
-resamplingFuncFlag = 'resamplingByHistc'; % Relatively fast
-%resamplingFuncFlag = 'randsampleL'; % Locally saved randsample.m by Mathworks
+resamplingFuncFlag = 'resamplingSystematic'; % Relatively fast
+%resamplingFuncFlag = 'resamplingByHistc'; % It is same with resamplingSystematic
 %resamplingFuncFlag = 'statisticsToolbox'; % Statistics toolbox is required
 
 try
@@ -21,12 +20,8 @@ try
             
         case 'resamplingByHistc'
             resampledIndex = resamplingByHistc(tmpIndex, weight);
-            
-        case 'randsampleL'
-            resampledIndex = randsampleL(tmpIndex,numberOfParticle,true, weight);
-            
-        case 'statisticsToolbox' % Statistics toolbox is required.
-            
+                        
+        case 'statisticsToolbox' % Statistics and machine learning toolbox is required.  
             [~, resampledIndex] = datasample(tmpIndex, numberOfParticle, ...
                 'Weights', weight, 'Replace', true);
         otherwise
