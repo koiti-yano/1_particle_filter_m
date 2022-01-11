@@ -73,7 +73,7 @@ hold on
 plot(stateEstimated(:, 1),  'k--o');
 plot(lowerBound(:, 1), 'k:');
 plot(upperBound(:, 1), 'k:');
-legend('True state', 'Estimated state (miscalibrated parameter)', 'Lower bound', 'Upper bound');
+legend('True state', 'Estimated state', 'Lower bound', 'Upper bound');
 hold off
 %print -deps one_dim_lin_gauss_filt
 

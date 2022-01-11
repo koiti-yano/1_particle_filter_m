@@ -69,8 +69,7 @@ hold on
 plot(stateEstimated(:, 1), 'k--o')
 plot(lowerBound(:, 1), 'k:');
 plot(upperBound(:, 1), 'k:');
-
-legend('True state', 'Estimated state')
+legend('True state', 'Estimated state', 'Lower bound', 'Upper bound');
 hold off
 %print -deps NonLinFilt
 
@@ -98,8 +97,7 @@ hold on
 plot(stateEstimatedMis(:, 1), 'k--o')
 plot(lowerBoundMis(:, 1), 'k:');
 plot(upperBoundMis(:, 1), 'k:');
-
-legend('True state', 'Estimated state')
+legend('True state', 'Estimated state (miscalibrated parameter)', 'Lower bound', 'Upper bound');
 hold off
 %print -deps NonLinFilt
 
